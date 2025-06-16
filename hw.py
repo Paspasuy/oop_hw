@@ -4,24 +4,11 @@ import copy
 class Printable(ABC):
     """Base abstract class for printable objects."""
     def print_me(self, prefix="", is_last=False, no_slash=False, is_root=False):
-        # add = "| " if no_slash else "  "
-        add = "+-" if not is_last else "\-"
        
-        return prefix + add + str(self) + "\n"
         """Base printing method for the tree structure display.
         Implement properly to display hierarchical structure."""
-        result = prefix
-        has_prefix = len(prefix) > 0
-
-        if has_prefix:
-            result += " " if no_slash else "|"
-
-        if not is_root:
-            result += "\\-" if is_last else "+-"
-
-        result += str(self)
-        result += "\n"
-        return result
+        add = "+-" if not is_last else "\-"
+        return prefix + add + str(self) + "\n"
 
 #    @abstractmethod
     def clone(self):
@@ -38,7 +25,7 @@ class BasicCollection(Printable):
     def find(self, elem):
         for i, el in enumerate(self._items):
             if el == elem:
-                return el#.clone()
+                return el
         assert False, f'Item {elem} not found'
         
     def clone(self):
@@ -46,8 +33,6 @@ class BasicCollection(Printable):
     def print_me(self, prefix, is_last, no_slash=True):
         add = "+-" if not is_last else "\-"
         res = prefix + add + str(self) + "\n"
-#        if not is_last:
-#            prefix += padd
         for idx, ch in enumerate(self._items):
             last =  idx == len(self._items) -1
             padd = "| " if not is_last else "  "
